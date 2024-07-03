@@ -1,0 +1,9 @@
+[font]
+normal = { family = "UDEV Gothic 35NFLG", style = "Regular" }
+
+[colors.primary]
+background = "#0F151A"
+
+[terminal]
+osc52 = "CopyPaste"
+

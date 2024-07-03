@@ -1,0 +1,27 @@
+bat v0.24.0:
+    bat
+cargo-update v13.4.0:
+    cargo-install-update
+    cargo-install-update-config
+exa v0.10.1:
+    exa
+fd-find v10.1.0:
+    fd
+gitui v0.26.3:
+    gitui
+lsd v1.1.2:
+    lsd
+mocword v0.2.0:
+    mocword
+navi v2.23.0:
+    navi
+ripgrep v14.1.0:
+    rg
+satysfi-language-server v0.0.1 (ssh://github.com/monaqa/satysfi-language-server?branch=master#1ce6bc4d):
+    satysfi-language-server
+stylua v0.20.0:
+    stylua
+tealdeer v1.6.1:
+    tldr
+xh v0.22.0:
+    xh
