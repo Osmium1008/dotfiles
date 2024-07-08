@@ -14,7 +14,7 @@ require("lualine").setup({
             },
             "filetype",
         },
-        lualine_y = { "encoding", { "fileformat", symbols = { unix = "" } } },
+        lualine_y = { "encoding", { "fileformat", symbols = { unix = vim.g.unix_file_icons } } },
     },
     tabline = {
         lualine_a = { { "buffers", symbols = { modified = "_󰷥", alternate_file = " ", directory = " " } } },
