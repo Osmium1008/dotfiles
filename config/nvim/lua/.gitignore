@@ -1,0 +1,5 @@
+*
+!/.gitignore
+!/options.lua
+!/keymaps.lua
+!/extensions/

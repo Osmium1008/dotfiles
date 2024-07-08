@@ -1,0 +1,6 @@
+*
+!/.gitignore
+!/init.lua
+!/manager.lua
+!/themes.lua
+!/complete.lua

@@ -1,6 +1,4 @@
-/fish_variables
-/themes/
-/functions/
-/completions/
-/conf.d/
-/local_config.fish
+*
+!/.gitignore
+!/config.fish
+!/fish_plugins

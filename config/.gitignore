@@ -1,0 +1,7 @@
+*
+!/.gitignore
+!/alacritty/
+!/fish/
+!/nvim/
+!/skk_general/
+!/vim/
