@@ -15,12 +15,7 @@ vim.opt.writebackup = false
 vim.opt.updatetime = 300
 vim.opt.shortmess:append("c")
 vim.opt.encoding = "utf-8"
-
-if vim.fn.has("patch-8.1.1564") == 1 then
-    vim.opt.signcolumn = "number"
-else
-    vim.opt.signcolumn = "yes"
-end
+vim.opt.signcolumn = "yes"
 
 if vim.fn.has("termguicolors") == 1 then
     vim.opt.termguicolors = true
