@@ -1,5 +1,3 @@
-set -U FZF_LEGACY_KEYBINDINGS 0
-set -U FZF_REVERSE_ISEARCH_OPTS "--reverse --height=100%"
 set -g theme_display_virtualenv yes
 set -g theme_display_user yes
 set -g theme_title_display_user yes
