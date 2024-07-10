@@ -1,0 +1,16 @@
+*
+!/.gitignore
+!/ayu.lua
+!/complete.lua
+!/lazy.lua
+!/lspconfig.lua
+!/lspsaga.lua
+!/lualine.lua
+!/mason-lspconfig.lua
+!/mason-nullls.lua
+!/mason.lua
+!/noice.lua
+!/skkeleton.lua
+!/telescope.lua
+!/tokyonight.lua
+!/treesitter.lua

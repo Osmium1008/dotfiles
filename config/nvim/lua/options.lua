@@ -31,4 +31,3 @@ vim.opt.showmode = false
 if vim.g.unix_file_icons == "" then
     vim.g.unix_file_icons = ""
 end
-
