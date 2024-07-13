@@ -5,7 +5,16 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
-    opts = {},
+    ---@type oil.setupOpts
+    opts = {
+        delete_to_trash = true,
+        view_options = { show_hidden = true },
+        float = { border = "single" },
+        preview = { border = "single" },
+        progress = { border = "single" },
+        ssh = { border = "single" },
+        keymaps_help = { border = "single" },
+    },
     lazy = false,
     keys = {
         {
