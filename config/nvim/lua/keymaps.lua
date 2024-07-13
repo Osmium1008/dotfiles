@@ -17,5 +17,11 @@ vim.keymap.set("n", "<Leader>gm", ":G merge<CR>", { noremap = true, silent = tru
 ]]
 --vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 vim.keymap.set("n", "<Leader>fm", function()
-    vim.lsp.buf.format({ async = true, timeout_ms = 2000 })
+    vim.lsp.buf.format({
+        async = true,
+        timeout_ms = 2000,
+        filter = function(client)
+            return client.name ~= "clangd" and client.name ~= "lua_ls"
+        end,
+    })
 end)
