@@ -1,3 +1,4 @@
+-- 当ファイルには追加のライセンス表記があります
 ---@type LazySpec
 ---@diagnostic disable-next-line:missing-fields
 return {
@@ -31,6 +32,20 @@ return {
                 vim.fn["skkeleton#initialize"]()
             end,
         })
+        -- ここからしばらくのコードはAtusy (https://github.com/atusy) 氏によるコードの改変引用となります
+        -- 以下「ここまで」と表記する箇所までのコードにはこのリポジトリのライセンスに加え以下に引用したライセンスが追加で適用されます
+        --
+        -- Original: https://github.com/atusy/dotfiles/blob/0bdc816ff6c4958fe330337374b1b79fd01c75a2/dot_config/nvim/lua/plugins/skkeleton/init.lua#L40
+        -- オリジナルのライセンス表記は以下
+        --MIT License
+        --
+        --Copyright (c) 2023 Atsushi Yasumoto
+        --
+        --Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        --
+        --The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        --
+        --THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         vim.api.nvim_create_autocmd("User", {
             group = "skkeleton_settings",
             pattern = "skkeleton-enable-post",
@@ -53,6 +68,7 @@ return {
                 pcall(vim.keymap.del, { "i", "c", "t" }, ":", { buffer = true })
             end,
         })
+        -- ここまで
     end,
     dependencies = { "vim-denops/denops.vim", { "delphinus/skkeleton_indicator.nvim", opts = {} } },
 }
