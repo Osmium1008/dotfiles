@@ -49,8 +49,8 @@ return {
         vim.api.nvim_create_autocmd("User", {
             group = "skkeleton_settings",
             pattern = "skkeleton-enable-post",
-            callback = function()
-                vim.keymap.set({ "i", "c", "t" }, ":", function()
+            callback = function(ctx)
+                vim.keymap.set( vim.api.nvim_get_mode().mode, ":", function()
                     local state = vim.g["skkeleton#state"]
                     local mode = vim.fn["skkeleton#mode"]()
                     if mode ~= "abbrev" and state.phase == "input:okurinasi" then
@@ -58,7 +58,7 @@ return {
                             .. [[<Cmd>call skkeleton#handle("handleKey", {"key": ";"})<CR>]]
                     end
                     return [[<Cmd>call skkeleton#handle("handleKey", {"key": ":"})<CR>]]
-                end, { buffer = true, expr = true })
+                end, { buffer = ctx.buf, expr = true })
             end,
         })
         vim.api.nvim_create_autocmd("User", {
