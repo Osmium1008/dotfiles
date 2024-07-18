@@ -2,9 +2,11 @@
 ---@type LazySpec
 ---@diagnostic disable-next-line:missing-fields
 return {
-    "vim-skk/skkeleton",
+    "Osmium1008/skkeleton",
+    branch = "lua_patch",
     lazy = false,
     config = function()
+        local skkeleton = require("skkeleton")
         vim.keymap.set({ "i", "c", "t" }, [[<C-j>]], [[<Plug>(skkeleton-enable)]], { noremap = false })
 
         vim.api.nvim_create_augroup("skkeleton_settings", {})
@@ -12,24 +14,21 @@ return {
             group = "skkeleton_settings",
             pattern = "skkeleton-initialize-pre",
             callback = function()
-                vim.fn["skkeleton#config"]({
+                skkeleton.setup({
                     eggLikeNewline = true,
                     sources = { "skk_server" },
                     globalKanaTableFiles = { { "~/.config/skk_general/kana-rule.conf", "euc-jp" } },
                     --skkServerResEnc = "utf-8",
                     --skkServerReqEnc = "utf-8",
                 })
-                vim.fn.add(vim.g["skkeleton#mapped_keys"], ":")
-                vim.fn.add(vim.g["skkeleton#mapped_keys"], ";")
-                vim.fn.add(vim.g["skkeleton#mapped_keys"], "\"")
-                vim.fn["skkeleton#register_keymap"]("input", "`", "katakana")
-                vim.fn["skkeleton#register_keymap"]("input", "\"", "henkanPoint")
+                skkeleton.register_keymap("input", "`", "katakana")
+                skkeleton.register_keymap("input", "\"", "henkanPoint")
             end,
         })
         vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
             group = "skkeleton_settings",
             callback = function()
-                vim.fn["skkeleton#initialize"]()
+                skkeleton.initialize()
             end,
         })
         -- ここからしばらくのコードはAtusy (https://github.com/atusy) 氏によるコードの改変引用となります
@@ -51,8 +50,8 @@ return {
             pattern = "skkeleton-enable-post",
             callback = function(ctx)
                 vim.keymap.set( vim.api.nvim_get_mode().mode, ":", function()
-                    local state = vim.g["skkeleton#state"]
-                    local mode = vim.fn["skkeleton#mode"]()
+                    local state = skkeleton.get_state()
+                    local mode = skkeleton.get_mode()
                     if mode ~= "abbrev" and state.phase == "input:okurinasi" then
                         return [[<Cmd>call skkeleton#handle("handleKey", {"key": "\""})<CR>]]
                             .. [[<Cmd>call skkeleton#handle("handleKey", {"key": ";"})<CR>]]
