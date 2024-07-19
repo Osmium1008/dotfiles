@@ -2,7 +2,7 @@
 ---@diagnostic disable-next-line: missing-fields
 return {
     "williamboman/mason-lspconfig.nvim",
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "williamboman/mason.nvim",
         "neovim/nvim-lspconfig",

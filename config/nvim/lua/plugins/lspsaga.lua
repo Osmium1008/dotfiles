@@ -2,6 +2,7 @@
 ---@diagnostic disable-next-line: missing-fields
 return {
     "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
     ---@type LspsagaConfig
     opts = {
         ui = {
@@ -17,7 +18,6 @@ return {
             auto_preview = false,
         },
     },
-    lazy = false,
     dependencies = {
         "nvim-tree/nvim-web-devicons",
         "nvim-treesitter/nvim-treesitter",

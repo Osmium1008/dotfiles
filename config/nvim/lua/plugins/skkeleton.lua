@@ -3,7 +3,7 @@
 ---@diagnostic disable-next-line:missing-fields
 return {
     "vim-skk/skkeleton",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
         vim.keymap.set({ "i", "c", "t" }, [[<C-j>]], [[<Plug>(skkeleton-enable)]], { noremap = false })
 
