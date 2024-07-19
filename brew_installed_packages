@@ -42,6 +42,7 @@ glib
 glib-networking
 gmp
 gnu-tar
+gnupg
 gnutls
 go
 gobject-introspection
@@ -70,6 +71,7 @@ lame
 leptonica
 libarchive
 libass
+libassuan
 libb2
 libbluray
 libcuefile
@@ -78,6 +80,7 @@ libevent
 libgcrypt
 libgpg-error
 libidn2
+libksba
 libmicrohttpd
 libmpc
 libnghttp2
@@ -144,6 +147,7 @@ neovim
 nettle
 ninja
 nkf
+npth
 numpy
 opam
 openblas
@@ -159,6 +163,9 @@ p11-kit
 pango
 pcre2
 perl
+pinentry
+pinentry-mac
+pinentry-touchid
 pixman
 pkg-config
 plzip
@@ -213,4 +220,7 @@ stats
 temurin11
 temurin17
 temurin21
+temurin@11
+temurin@17
+temurin@21
 temurin@8
