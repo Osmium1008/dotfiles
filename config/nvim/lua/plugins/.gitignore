@@ -16,3 +16,4 @@
 !/treesitter.lua
 !/oil.lua
 !/gitsigns.lua
+!/highlight_colors.lua
