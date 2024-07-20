@@ -4,7 +4,7 @@
 return {
     "Osmium1008/skkeleton",
     branch = "lua_patch",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
         local skkeleton = require("skkeleton")
         vim.keymap.set({ "i", "c", "t" }, [[<C-j>]], [[<Plug>(skkeleton-enable)]], { noremap = false })

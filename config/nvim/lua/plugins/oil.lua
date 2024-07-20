@@ -5,6 +5,7 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
+    lazy = false,
     ---@type oil.setupOpts
     opts = {
         delete_to_trash = true,
@@ -15,13 +16,18 @@ return {
         ssh = { border = "single" },
         keymaps_help = { border = "single" },
     },
-    lazy = false,
     keys = {
         {
             mode = "n",
             "<Leader>fd",
             "<cmd>Oil<CR>",
-            desc = "Open Parent Directory",
+            desc = "Open File Browser",
         },
+        {
+            mode = "n",
+            "<Leader>ff",
+            "<cmd>Oil --float<CR>",
+            desc = "Open File Browser on Floating Window",
+        }
     },
 }
