@@ -4,7 +4,7 @@
 
 ### Requirements
 - [Neovim](https://neovim.io) 
-    どうにも少なくともOSXとかだと自前でビルドした方がよさそう
+    はい
 - [Deno](https://deno.com)
     令和最新版`TypeScript`実行環境。割と早いらしい。`denops`ファミリーが使う。
 - [Git](https://git-scm.com)

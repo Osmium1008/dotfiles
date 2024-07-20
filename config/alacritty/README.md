@@ -4,7 +4,7 @@
 
 ### Requirements
 - [Alacritty](https://alacritty.org) 
-    はい
+    どうにも少なくともOSXとかだと自前でビルドした方がよさそう
 - [UDEV Gothic Nerd Font](https://github.com/yuru7/udev-gothic) 
     BIZ UDとかベースの等幅フォントでなかなか見やすい。Nerd Fontのパッチが時々足りてないのが玉に瑕?
 
