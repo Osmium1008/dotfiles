@@ -43,6 +43,13 @@ return {
                     maxWidth = 50,
                     ellipses_char = "...",
                     show_labelDetails = true,
+                    menu = {
+                        buffer = "[Buffer]",
+                        nvim_lsp = "[LSP]",
+                        nvim_lua = "[Lua]",
+                        async_path = "[Path]",
+                        cmdline = "[Command]",
+                    },
                 }),
             },
             preselect = cmp.PreselectMode.None,
