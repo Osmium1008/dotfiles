@@ -10,6 +10,8 @@ return {
         },
     },
     event = { "BufReadPre", "BufNewFile" },
+    ---@type MasonNullLsSettings
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
         handlers = {},
     },

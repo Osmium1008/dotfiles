@@ -8,6 +8,7 @@ return {
         "neovim/nvim-lspconfig",
         "hrsh7th/cmp-nvim-lsp",
     },
+    ---@type MasonLspconfigSettings
     opts = {},
     config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
