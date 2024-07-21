@@ -3,7 +3,7 @@
 ---@diagnostic disable-next-line:missing-fields
 return {
     "Osmium1008/skkeleton",
-    branch = "lua_patch",
+    branch = "master",
     event = "VeryLazy",
     config = function()
         local skkeleton = require("skkeleton")
@@ -14,7 +14,7 @@ return {
             group = "skkeleton_settings",
             pattern = "skkeleton-initialize-pre",
             callback = function()
-                skkeleton.setup({
+                skkeleton.config({
                     eggLikeNewline = true,
                     sources = { "skk_server" },
                     globalKanaTableFiles = { { "~/.config/skk_general/kana-rule.conf", "euc-jp" } },
