@@ -5,5 +5,7 @@ return {
     event = "VeryLazy",
     opts = {
         render = "virtual",
+        enable_short_hex = false,
+        enable_tailwind = true,
     },
 }
