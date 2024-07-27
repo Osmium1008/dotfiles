@@ -8,6 +8,7 @@ fzy
 gcc
 gh
 git
+glib
 gnu-tar
 gnupg
 go
@@ -20,7 +21,9 @@ neovim
 ninja
 nkf
 opam
+pinentry-mac
 pkg-config
+python
 qemu
 rename
 sevenzip
