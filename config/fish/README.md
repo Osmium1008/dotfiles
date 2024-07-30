@@ -1,27 +1,27 @@
 ## dotfiles\#Fish
 
-馴染みやすくあとちょっとレトロな POSIX 非互換シェル。 ~だが設定を適用すると大分モダンな見た目になる~
+馴染みやすくあとちょっとレトロな POSIX **非** 互換シェル。 ~だが設定を適用すると大分モダンな見た目になる~
 
 ### Requirements
 - [Fish shell](https://fishshell.com) 
-    最近のOSXだと標準で入っているらしい。入ってなかったら入れよう。
+    最近の OSX だと標準で入っているらしい。入ってなかったら入れよう。
 - [Fisher](https://github.com/jorgebucaran/fisher/) 
-    Fish向けパッケージマネージャーのデファクトスタンダード。
+    Fish 向けパッケージマネージャーのデファクトスタンダード。
 - [Rust](https://www.rust-lang.org) 
-    モダンな互換コマンド群を入れるのにCargoが必要になる。
+    モダンな互換コマンド群を入れるのに Cargo が必要になる。
 - Cargo Packages:
     - [bat](https://crates.io/crates/bat)
-        シンタックスハイライトとか貼ってくれるcatクローン
+        シンタックスハイライトとか貼ってくれる cat クローン
     - [fd](https://crates.io/crates/fd-find)
-        gitignore とかのサポートがありまた早いfindクローン
+        gitignore とかのサポートがありまた早い find クローン
     - [lsd](https://crates.io/crates/lsd)
-        カラフルでアイコンとかもついてて見やすいlsクローン
+        カラフルでアイコンとかもついてて見やすい ls クローン
     - [ripgrep(rg)](https://crates.io/crates/ripgrep)
-        爆速grepクローン いろんなプログラムが前提で求めてくる
+        爆速 grep クローン いろんなプログラムが前提で求めてくる
 - [fzy](https://github.com/jhawthorn/fzy)
-    早くて割といい感じに動く*Fuzzy Finder* あんまり使ってない
-- True Colorに対応していてNerd Font系を適用したターミナルエミュレータ
-    (dotfilesを適用した**Alacritty**など)
+    早くて割といい感じに動く Fuzzy Finder ~あんまり使ってない~
+- True Colorに対応していて Nerd Font 系を適用したターミナルエミュレータ
+    (dotfiles を適用した **Alacritty** など)
 
 ### Usage
 1. `Fisher` を除いた必要パッケージをすべてインストールする。

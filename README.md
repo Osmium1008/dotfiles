@@ -5,13 +5,13 @@
 ## Features
 
 ### \*_installed_packages
-基本環境(多分Macbook Air)でのインストール済みパッケージの一覧
+基本環境 (多分 Macbook Air) でのインストール済みパッケージの一覧
 うまく動かない時の参考に...
 
 ### Alacritty
 ### Neovim
 ### Fish
-詳しくは各サブフォルダのREADME.mdを
+詳しくは各サブフォルダの `README.md` を
 
 ### Emacs
 ### Vim
@@ -28,10 +28,10 @@
 各フォルダに入っている `.gitignore` も参照
 
 ## ToDo
-- Dark deno-poweredシリーズを用いてVimの設定を書く
-- (たぶん)Arch Linux機に埋まっているSwayの設定を引っ張り出してくる
-- VM上のFedoraに乗ってる諸々の設定も引っ張ってくる
-- satysfi_lsを消した版のブランチを切る
+- Dark deno-powered シリーズを用いて Vim の設定を書く
+- (たぶん) Arch Linux 機に埋まっている Sway の設定を引っ張り出してくる
+- VM 上の Fedora に乗ってる諸々の設定も引っ張ってくる
+- satysfi_ls を消した版のブランチを切る
 - etc...
 
 ## License
