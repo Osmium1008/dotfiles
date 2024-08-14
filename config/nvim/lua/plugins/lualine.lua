@@ -26,7 +26,9 @@ return {
                 {
                     "fileformat",
                     symbols = {
-                        unix = vim.g.unix_file_icons,
+                        unix = "󰁍",
+                        dos = "󰌑",
+                        mac = "󰁅",
                     },
                 },
             },

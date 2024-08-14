@@ -3,7 +3,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
-    build = ":TSUpdate",
     lazy = false,
     opts_extend = { "ensure_installed" },
     main = "nvim-treesitter.configs",
@@ -33,7 +32,7 @@ return {
             "python",
         },
         sync_install = true,
-        auto_install = true,
+        auto_install = false,
         highlight = {
             enable = true,
         },

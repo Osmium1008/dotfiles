@@ -39,7 +39,3 @@ if vim.fn.has("termguicolors") == 1 then
 end
 
 vim.opt.showmode = false
-
-if vim.g.unix_file_icons == "" then
-    vim.g.unix_file_icons = ""
-end
