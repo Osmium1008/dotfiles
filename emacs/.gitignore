@@ -1,2 +1,5 @@
 *
 !/.gitignore
+!/init.el
+!/config.org
+!/custom-azic.org

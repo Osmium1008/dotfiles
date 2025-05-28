@@ -1,0 +1,372 @@
+#+title: config.el
+#+AUTHOR: Osmium_1008
+#+STARTUP: show2levels
+
+* config.el
+** header
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  ;;; config.el --- Emacs settings -*- coding: utf-8; lexical-binding: t; -*-
+  ;; Author: Osmium_1008 (osmium1008@gmail.com)
+  ;; Version: 0.1
+
+  ;;; Code:
+#+end_src
+
+** OS distinction
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (defconst IS-MAC (eq system-type 'darwin))
+  (defconst IS-LINUX (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
+  (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
+#+end_src
+
+** leaf.el
+わりと柔軟に書ける設定マネージャ
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (eval-and-compile
+    (customize-set-variable
+     'package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
+    (package-initialize)
+    (use-package leaf :ensure t)
+
+    (leaf leaf-keywords
+      :ensure t
+      :init
+      (leaf blackout :ensure t)
+      :config
+      (leaf-keywords-init)))
+
+  (leaf leaf-tree
+    :doc "Interactive sidebar feature for leaf.el"
+    :ensure t)
+
+  (leaf leaf-convert
+    :doc "Convert many format to leaf format"
+    :ensure t)
+#+end_src
+
+** cus-edit
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf cus-edit
+    :doc "tools for customizing Emacs and Lisp packages"
+    :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
+#+end_src
+
+** customize settings
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf cus-start
+    :doc "define customization properties of builtins"
+    :tag "out-of-MELPA" "internal"
+    :added "2025-05-26"
+    :preface
+    (defun c/redraw-frame nil ; Do nothing.
+      (interactive)
+      (redraw-frame))
+
+    :bind (("M-ESC ESC" . c/redraw-frame)) ; Do nothing when triple tapped ESC.
+
+    :custom '((user-full-name . "Suomi Sawano")
+              (user-mail-address . "osmium1008@gmail.com")
+              (user-login-name . "osmium_1008")
+              (create-lockfiles . nil) ; Don't create lockfile
+              (tab-width . 4) ; Set indent width to 4em
+              (debug-on-error . t) ; show debug msg
+              (init-file-debug . t)
+              (frame-resize-pixelwise . t) 
+              (enable-recursive-minibuffers . t)
+              (history-length . 1000)
+              (history-delete-duplicates . t)
+              (scroll-preserve-screen-position . t)
+              (scroll-conservatively . 100)
+              (mouse-wheel-scroll-amount . '(1 ((control) . 5)))
+              (ring-bell-function . 'ignore)
+              (text-quoting-style . 'straight)
+              (truncate-lines . t)
+              (use-dialog-box . nil)
+              (use-file-dialog . nil)
+              (menu-bar-mode . t)
+              (tool-bar-mode . nil)
+              (scroll-bar-mode . nil)
+              (indent-tabs-mode . nil))
+    :config
+    (set-frame-parameter)
+    (prefer-coding-system 'utf-8-unix)
+    (defalias 'yes-or-no-p 'y-or-n-p)
+    (keyboard-translate ?\C-h ?\C-?))
+#+end_src
+
+** startup
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf startup
+    :doc "startup commands"
+    :custom `((inhibit-startup-screen . t)
+              (auto-save-list-file-prefix . ,(locate-user-emacs-file "backup/.saves-"))))
+#+end_src
+
+** autorevert
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf autorevert
+    :doc "revert buffers when files on disk change"
+    :global-minor-mode global-auto-revert-mode)
+#+end_src
+
+** delsel
+Delete sentence when selects them and write
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf delsel
+    :doc "delete selection if you insert"
+    :global-minor-mode delete-selection-mode)
+#+end_src
+
+** paren
+Highlighting parenthesis.
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf paren
+    :doc "highlight matching paren"
+    :global-minor-mode show-paren-mode)
+#+end_src
+
+** files
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf files
+    :doc "file input and output commands for Emacs"
+    :global-minor-mode auto-save-visited-mode
+    :custom `((auto-save-file-name-transforms . '((".*" ,(locate-user-emacs-file "backup/") t)))
+              (backup-directory-alist . '((".*" . ,(locate-user-emacs-file "backup"))
+                                          (,tramp-file-name-regexp . nil)))
+              (version-control . t)
+              (delete-old-versions . t)
+              (auto-save-visited-interval . 30)))
+#+end_src
+
+** simple
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf simple
+    :doc "basic editing commands for Emacs"
+    :custom ((kill-read-only-ok . t)
+             (kill-whole-line . t)
+             (eval-expression-print-length . nil)
+             (eval-expression-print-level . nil)))
+#+end_src
+
+** savehist
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf savehist
+    :doc "Save minibuffer history"
+    :custom `((savehist-file . ,(locate-user-emacs-file "savehist")))
+    :global-minor-mode t)
+#+end_src
+
+** which-key
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf which-key
+    :doc "Display available keybindings in popup"
+    :ensure t
+    :global-minor-mode t)
+#+end_src
+
+** flycheck
+High-spec linter
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf flycheck
+    :doc "On-the-fly syntax checking"
+    :req "emacs-27.1"
+    :tag "tools" "languages" "convenience" "emacs>=27.1"
+    :url "https://www.flycheck.org"
+    :added "2025-05-26"
+    :ensure t
+    :global-minor-mode global-flycheck-mode)
+#+end_src
+
+** puni
+Autoclose parenthesis
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf puni
+    :doc "Parentheses Universalistic"
+    :req "emacs-26.1"
+    :tag "tools" "lisp" "convenience" "emacs>=26.1"
+    :url "https://github.com/AmaiKinono/puni"
+    :added "2025-05-26"
+    :ensure t
+    :global-minor-mode puni-global-mode
+    :config
+    (leaf elec-pair
+      :doc "Automatic parenthesis pairing"
+      :global-minor-mode electric-pair-mode))
+#+end_src
+** appearances
+*** font
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf font
+    :added "2025-05-26"
+    :config
+    (leaf nerd-icons :ensure t)
+    (let* ((family "UDEV Gothic NFLG")
+           (fontspec (font-spec :family family :weight 'normal)))
+      (set-face-attribute 'default nil :family family :height 130)
+      (set-fontset-font nil 'ascii fontspec nil 'append)
+      (set-fontset-font nil 'japanese-jisx0208 fontspec nil 'append)))
+#+end_src
+
+*** full-screen
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (set-frame-parameter nil 'fullscreen 'maximized)))
+#+end_src
+
+*** color-theme
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf ef-themes
+    :doc "customizable theme set"
+    :ensure t
+    :config
+    (ef-themes-select 'ef-frost))
+#+end_src
+
+*** Moody
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf moody
+    :doc "Tabs and ribbons for the mode line"
+    :req "emacs-26.1" "compat-30.0.1.0"
+    :tag "faces" "emacs>=26.1"
+    :url "https://github.com/tarsius/moody"
+    :added "2025-05-26"
+    :ensure t
+    :config
+    (moody-replace-mode-line-front-space)
+    (moody-replace-mode-line-buffer-identification)
+    (moody-replace-vc-mode))
+#+End_src
+
+*** Minions
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf minions
+    :doc "simplify minor mode display"
+    :ensure t
+    :global-minor-mode minions-mode)
+#+end_src
+
+*** hl-line
+Highlighting current line.
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf hl-line
+    :doc "highlight current line"
+    :global-minor-mode global-hl-line-mode)
+#+end_src
+*** posframe
+補完フレームっぽいものを表示してくれる ddskk用に...
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf posframe :ensure t)
+#+end_src
+** org-mode
+*** org
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf org
+    :custom ((org-startup-indented . t)
+             (org-indent-indentation-per-level . 4)
+             (org-use-speed-commands . t)
+             (org-startup-folded 'content)))
+#+end_src
+
+*** org-modern
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf org-modern
+    :ensure t
+    :custom ((org-modern-star . "Replace"))
+    :global-minor-mode global-org-modern-mode)
+
+  (leaf org-modern-indent
+    :vc (:url "https://github.com/jdtsmith/org-modern-indent.git")
+    :config
+    (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+#+end_src
+
+** SKK
+*** ddskk
+こうしておけばひとまず普通に日本語が打てるようにはなる。
+とりあえず標準のAZIKも有効化しておいた それなりには使える
+なぜかconfigが発火していない気がするが... Afterも怪しいしどうなってるのやら...
+customはskkeletonとかと同じ感じで打てるようにしてみている (本当に?)
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf ddskk
+    :commands (skk-make-indicator-alist
+               skk-mode-exit)
+    :vc (:url "https://github.com/skk-dev/ddskk")
+    :bind (("C-x C-j" . skk-mode)
+           ("C-x j" . skk-mode)
+           ("C-\\" . skk-mode))
+    :init (defvar dired-bind-jump nil)
+    :custom `((skk-server-host . "localhost")
+              (skk-server-portnum . 1178)
+              (skk-init-file . "")
+              (skk-byte-compile-init-file . nil)
+              (skk-latin-mode-string . "_@")
+              (skk-hiragana-mode-string . "あ")
+              (skk-katakana-mode-string . "ア")
+              (skk-jisx0208-latin-mode-string . "Ａ")
+              (skk-abbrev-mode-string . "aA")
+              (default-input-method . "japanese-skk")
+              (skk-preload . t)
+              (skk-show-mode-show . t)
+              (skk-henkan-strict-okuri-precedence . t)
+              (skk-egg-like-newline . t)
+              (skk-delete-implies-kakutei . nil)
+              (skk-delete-okuri-when-quit . t)
+              (skk-indicator-prefix . "SKK:[")
+              (skk-indicator-suffix-func . #'(lambda (mode) "]:"))
+              (skk-user-directory . ,(locate-user-emacs-file ".ddskk"))
+              ;(skk-use-azik . t)
+              (skk-use-color-cursor . nil)
+              (skk-indicator-use-cursor-color . nil)
+              (skk-auto-insert-paren . t)
+              (skk-isearch-mode-enable . nil)
+              (skk-jisyo-code . 'utf-8-unix)
+              (skk-azik-keyboard-type . 'us101)))
+#+end_src
+
+*** ddskk-posframe
+posframeに変換候補を入れてくれるやつ after ddskkをすると上手く動かない なぜ?
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf ddskk-posframe
+    :vc (:url "https://github.com/conao3/ddskk-posframe.el")
+    :hook after-enable-theme-hook
+    :custom ((ddskk-posframe-border-width . 2))
+    :config
+    (ef-themes-with-colors
+      (custom-set-faces
+       `(ddskk-posframe ((,c :foreground ,fg-dim :background ,bg-dim)))
+       `(ddskk-posframe-border ((,c :background ,bg-alt)))))
+    :global-minor-mode ddskk-posframe-mode)
+#+end_src
+*** custom-azik
+AZIKをなんかいい感じに設定するための自作スクリプト 割と変な実装してる ちゃんとカタカナとかも変換できるので上出来
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf custom-azik
+    :require t
+    :hook skk-load-hook)
+#+end_src
+** footer
+
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (provide 'config)
+  ;;; config.el ends here
+#+end_src

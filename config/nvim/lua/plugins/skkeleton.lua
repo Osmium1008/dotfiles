@@ -21,6 +21,7 @@ return {
                     --skkServerResEnc = "utf-8",
                     --skkServerReqEnc = "utf-8",
                 })
+                vim.fn["skkeleton#register_keymap"]("input", "`", "katakana")
             end,
         })
         vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {

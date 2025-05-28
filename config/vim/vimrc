@@ -14,6 +14,37 @@ if exists('+termguicolors')
     set termguicolors
 endif
 
+# dpp settings
+
+$BASE_DIR = "<sfile>" -> expand() -> fnamemodify(":h")
+const dpp_base = "~/.cache/dpp" -> expand()
+
+if !dpp_base -> isdirectory()
+    call mkdir(dpp_base, "p")
+endif
+
+def PreloadPlugin(plugin: string)
+    const dir = dpp_base .. "/repos/github.com/" .. plugin
+    if !dir -> isdirectory()
+        execute "!git clone https://github.com/" .. plugin dir
+    endif
+    execute "set runtimepath^=" .. dir
+enddef
+
+call PreloadPlugin("Shougo/dpp.vim")
+if dpp_base->dpp#min#load_state()
+    call PreloadPlugin("Shougo/dpp-ext-installer")
+    call PreloadPlugin("Shougo/dpp-protocol-git")
+    call PreloadPlugin("vim-denops/denops.vim")
+    autocmd User DenopsReady
+    : echohl WarningMsg
+    | echomsg 'dpp load_state() is failed'
+    | echohl NON
+    | call dpp#make_state(dpp_base, "~/.config/vim/dpp.ts")
+endif
+
+# opts
+
 set ambiwidth=single
 
 set autoread
