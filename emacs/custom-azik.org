@@ -115,7 +115,7 @@ ddskk標準のAZIKの挙動が気に入らないので自前で書いてしま�
 *** unnecessary-base-rule
 使わないbase-ruleのルール(すなわち全て)を羅列する 長いので隔離
 #+begin_src emacs-lisp :tangle lisp/custom-azik.el
-  (defvar skk-azik-unnecessary-base-rule-list  
+  (defvar custom-azik-unnecessary-base-rule-list  
     '("a" 
       "bb"
       "ba"
@@ -378,7 +378,7 @@ ddskk標準のAZIKの挙動が気に入らないので自前で書いてしま�
 *** append-rule
 ルールを実際に反映させるところ
 #+begin_src emacs-lisp :tangle lisp/custom-azik.el
-  (dolist (str skk-azik-unnecessary-base-rule-list)
+  (dolist (str custom-azik-unnecessary-base-rule-list)
     (setopt skk-rom-kana-base-rule-list
       	  (skk-del-alist str skk-rom-kana-base-rule-list)))
 
