@@ -156,7 +156,16 @@ Highlighting parenthesis.
              (eval-expression-print-length . nil)
              (eval-expression-print-level . nil)))
 #+end_src
-
+** vc-git
+モードライン表示の抑制のため
+#+begin_src emacs-lisp :tangle lisp/config.el
+  ;(leaf vc-git
+  ;  :preface
+  ;  (defun filter-for-vc-mode-line (str) (substring str 4))
+  ;  :doc "VC backend for the git version control system"
+  ;  :advice
+  ;  (:filter-return vc-git-mode-line-string filter-for-vc-mode-line))
+#+end_src
 ** savehist
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf savehist
@@ -337,7 +346,7 @@ customはskkeletonとかと同じ感じで打てるようにしてみている (
               ;(skk-use-azik . t)
               (skk-use-color-cursor . nil)
               (skk-indicator-use-cursor-color . nil)
-              (skk-auto-insert-paren . t)
+              ;(skk-auto-insert-paren . t) 手動入力がバグるので無効化
               (skk-isearch-mode-enable . nil)
               (skk-jisyo-code . 'utf-8-unix)
               (skk-azik-keyboard-type . 'us101)))
@@ -353,12 +362,13 @@ posframeに変換候補を入れてくれるやつ after ddskkをすると上手
     :config
     (ef-themes-with-colors
       (custom-set-faces
-       `(ddskk-posframe ((,c :foreground ,fg-dim :background ,bg-dim)))
-       `(ddskk-posframe-border ((,c :background ,bg-alt)))))
+       `(ddskk-posframe ((t :foreground ,fg-dim :background ,bg-dim)))
+       `(ddskk-posframe-border ((t :background ,bg-alt)))))
     :global-minor-mode ddskk-posframe-mode)
 #+end_src
 *** custom-azik
 AZIKをなんかいい感じに設定するための自作スクリプト 割と変な実装してる ちゃんとカタカナとかも変換できるので上出来
+「っ」や「ん」なんかもしっかり送ってくれる
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf custom-azik
     :require t
