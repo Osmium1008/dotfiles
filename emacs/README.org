@@ -1,0 +1,16 @@
+#+TITLE: README
+#+AUTHOR: Osmium_1008
+
+** dotfiles#emacs
+一応シェル上でも動くらしいエディタ 基本GUIソフトウェアとして使うことになる
+
+*** Requirements
+- [[https://www.gnu.org/software/emacs/][GNU Emacs]] はい
+- 適当なSKK Server
+- [[https://github.com/yuru7/udev-gothic][UDEV Gothic]] これで日本語表示するように設定してあるので...
+*** Usage
+1. 諸々インストールする
+2. =emacs= のシンボリックリンクを =~/.emacs.d= (だと思う...)に貼る
+
+*** Settings
+全てEmacs Lispで書かれることが特徴。leaf.elの説明とか読めばなんとなく分かるようになっているはず...
