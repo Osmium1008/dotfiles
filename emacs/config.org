@@ -159,12 +159,12 @@ Highlighting parenthesis.
 ** vc-git
 モードライン表示の抑制のため
 #+begin_src emacs-lisp :tangle lisp/config.el
-  ;(leaf vc-git
-  ;  :preface
-  ;  (defun filter-for-vc-mode-line (str) (substring str 4))
-  ;  :doc "VC backend for the git version control system"
-  ;  :advice
-  ;  (:filter-return vc-git-mode-line-string filter-for-vc-mode-line))
+  (leaf vc-git
+    :preface
+    (defun filter-for-vc-mode-line (str) (substring str 4))
+    :doc "VC backend for the git version control system"
+    :advice
+    (:filter-return vc-git-mode-line-string filter-for-vc-mode-line))
 #+end_src
 ** savehist
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -335,7 +335,8 @@ customはskkeletonとかと同じ感じで打てるようにしてみている (
               (skk-abbrev-mode-string . "aA")
               (default-input-method . "japanese-skk")
               (skk-preload . t)
-              (skk-show-mode-show . t)
+              ;(skk-show-mode-show . t) わりと不調の原因になっているので...
+              ;(skk-show-mode-style . 'tooltip) なにやら上手く動作しない
               (skk-henkan-strict-okuri-precedence . t)
               (skk-egg-like-newline . t)
               (skk-delete-implies-kakutei . nil)
