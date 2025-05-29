@@ -310,7 +310,7 @@ ddskk標準のAZIKの挙動が気に入らないので自前で書いてしま�
       "xka"
       "xke"
       "xo"
-      "xts"
+      "xtsu"
       "xtu"
       "xu"
       "xwa"
