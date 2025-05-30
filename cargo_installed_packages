@@ -1,11 +1,12 @@
 bat
 cargo-update
+emacs-lsp-booster
 fd-find
-gitui
 lsd
 mocword
 ripgrep
 satysfi-language-server
 stylua
 tealdeer
+texlab
 xh
