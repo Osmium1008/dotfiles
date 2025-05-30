@@ -221,7 +221,8 @@ Gitプラグイン
         (mapc #'kill-buffer buffers)))
     :custom ((magit-define-global-key-bindings . nil))
     :bind (("C-x g" . magit-status)
-           ("C-x M-g" . magit-dispatch)
+           ("C-c g" . magit-dispatch)
+           ("C-c f" . magit-file-dispatch)
            (magit-status-mode-map
             ("q" . mu-magit-kill-buffers))))
 #+end_src
