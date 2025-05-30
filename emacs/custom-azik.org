@@ -109,7 +109,7 @@ ddskk標準のAZIKの挙動が気に入らないので自前で書いてしま�
         ("|" nil skk-set-henkan-point-subr)
         ("X" nil skk-purge-from-jisyo)
         ("/" nil skk-abbrev-mode)
-        ("\\" nil skk-input-by-code-or-menu)
+        ("\\" nil skk-toggle-characters)
         (skk-kakutei-key nil skk-kakutei)))
 #+end_src
 *** unnecessary-base-rule
