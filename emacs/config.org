@@ -165,10 +165,14 @@ Delete sentence when selects them and write
 #+end_src
 
 ** which-key
+キー入力に関するヘルプを生成してくれる なんとビルトイン
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf which-key
     :doc "Display available keybindings in popup"
     :ensure t
+    :custom ((which-key-popup-type . 'side-window))
+    :config
+    (which-key-setup-side-window-right-bottom)
     :global-minor-mode t)
 #+end_src
 
@@ -204,6 +208,69 @@ TeX編集支援
         :global-minor-mode t)
 #+end_src
 ** completion
+*** UI and Fuzzy-Finder
+**** Vertico
+UI提供プラグイン
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf vertico
+    :ensure t
+    :custom ((vertico-count . 20)
+             (vertico-resize . nil)
+             (vertico-cycle . t))
+    :global-minor-mode t)
+#+end_src
+**** consult
+補完対象の生成
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf consult
+    :bind (;; search系列
+           ("M-s b" . consult-buffer)
+           ("M-s M-b" . consult-buffer-other-window)
+           ("M-s M-m" . consult-mode-command)
+           ("M-s M-g" . consult-git-grep)
+           ("M-s l" . consult-line)
+           ("M-s M-l" . consult-line-multi)
+           ;; jump系列
+           ("M-g l" . consult-goto-line)
+           ("M-g M-g" . consult-goto-line)
+           ("M-g o" . consult-outline)
+           ("M-g m" . consult-mark)
+           ("M-g i" . consult-imenu)
+           ("M-g M-i" . consult-imenu-multi)
+           ("M-g e" . consult-compile-error)
+           ("M-g f" . consult-flyckeck)
+           )
+    :ensure t)
+#+end_src
+**** affe
+async fuzzy finderな感じのプラグイン consultのfindとgrepが若干使いづらいっぽいので
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf affe
+    :ensure t
+    :preface
+    (defun affe-find-document-dir ()
+      (interactive)
+      (affe-find (expand-file-name "~/Documents")))
+    (defun affe-find-dotfiles-dir ()
+      (interactive)
+      (affe-find (expand-file-name "~/dotfiles")))
+    (defun affe-find-home-dir ()
+      (interactive)
+      (affe-find (expand-file-name "~/")))
+    :bind (("M-s g" . affe-grep)
+           ("M-s f" . affe-find)
+           ("M-s F" . affe-find-document-dir)
+           ("M-s M-f" . affe-find-dotfiles-dir)
+           ("M-s C-f" . affe-find-home-dir))
+    :custom ((affe-highlight-function . 'orderless-highlight-matches)
+             (affe-regexp-function . 'orderless-pattern-compiler)
+             (affe-find-command . "fd --color=never --full-path")))
+#+end_src
+**** marginalia
+それっぽい補完候補の説明の生成
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf marginalia :ensure t :global-minor-mode t)
+#+end_src
 *** inline-complete
 **** corfu
 補完インターフェースを提供するパッケージ
@@ -317,9 +384,25 @@ corfuとtempelのintegrationとかやってくれる はず
     :global-minor-mode prescient-persist-mode)
   (leaf corfu-prescient
     :ensure t
-    :after corfu
+    :after corfu prescient
     :custom ((corfu-prescient-enable-filtering . nil))
-    :global-minor-mode corfu-prescient-mode)
+    :global-minor-mode t)
+  (leaf vertico-prescient
+    :ensure t
+    :after vertico prescient
+    :custom ((vertico-prescient-enable-filtering . nil))
+    :global-minor-mode t)
+#+end_src
+*** Code Action
+**** Embark
+コードアクション生成器
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf embark
+    :ensure t
+    :bind (("s-e" . embark-act)))
+  (leaf embark-consult
+    :ensure t
+    :after embark consult)
 #+end_src
 ** puni
 Autoclose parenthesis
@@ -394,7 +477,11 @@ corfuに対してiconを表示してあげる
     :doc "customizable theme set"
     :ensure t
     :config
-    (ef-themes-select 'ef-frost))
+    (ef-themes-select 'ef-frost)
+    (ef-themes-with-colors
+      (custom-set-faces
+       `(vc-edited-state ((t :foreground ,blue-cooler :inherit bold)))
+       `(vc-state-base ((t :inherit bold))))))
 #+end_src
 
 *** Moody
