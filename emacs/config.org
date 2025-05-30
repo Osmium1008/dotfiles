@@ -192,20 +192,38 @@ High-spec linter
 ** AUCTeX
 TeX編集支援
 #+begin_src emacs-lisp :tangle lisp/config.el
-      (leaf tex
-        :ensure auctex
-        :init
-        (leaf auctex-latexmk :ensure t)
-        :custom ((reftex-plug-into-AUCTeX . t)
-                 (TeX-parse-self . t)
-                 (TeX-command-default . "latexmk")
-                 (TeX-engine . 'luatex)))
-      (leaf reftex
-        :hook ((TeX-mode-hook LaTeX-mode-hook) . (turn-on-reftex LaTeX-math-mode outline-minor-mode TeX-source-correlate-mode auctex-latexmk-setup TeX-PDF-mode))
-        :custom ((reftex-toc-split-windows-horizontally . t)
-                 (reftex-cite-prompt-optional-args . t)
-                 (reftex-toc-split-windows-fraction . 0.3))
-        :global-minor-mode t)
+  (leaf tex
+    :ensure auctex
+    :init
+    (leaf auctex-latexmk :ensure t)
+    :custom ((reftex-plug-into-AUCTeX . t)
+             (TeX-parse-self . t)
+             (TeX-command-default . "latexmk")
+             (TeX-engine . 'luatex)))
+  (leaf reftex
+    :hook ((TeX-mode-hook LaTeX-mode-hook) . (turn-on-reftex LaTeX-math-mode outline-minor-mode TeX-source-correlate-mode auctex-latexmk-setup TeX-PDF-mode))
+    :custom ((reftex-toc-split-windows-horizontally . t)
+             (reftex-cite-prompt-optional-args . t)
+             (reftex-toc-split-windows-fraction . 0.3))
+    :global-minor-mode t)
+#+end_src
+** Magit
+Gitプラグイン
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf magit
+    :ensure t
+    :preface
+    (defun mu-magit-kill-buffers ()
+      "Restore window configuration and kill all Magit buffers."
+      (interactive)
+      (let ((buffers (magit-mode-get-buffers)))
+        (magit-restore-window-configuration)
+        (mapc #'kill-buffer buffers)))
+    :custom ((magit-define-global-key-bindings . nil))
+    :bind (("C-x g" . magit-status)
+           ("C-x M-g" . magit-dispatch)
+           (magit-status-mode-map
+            ("q" . mu-magit-kill-buffers))))
 #+end_src
 ** completion
 *** UI and Fuzzy-Finder
@@ -282,7 +300,6 @@ async fuzzy finderな感じのプラグイン consultのfindとgrepが若干使�
              (corfu-popupinfo-delay . 0)
              (corfu-auto-prefix . 3)
              (corfu-cycle . t)
-             (corfu-quit-no-match . 'separetor)
              (corfu-preselect . 'prompt)
              (text-mode-ispell-word-completion . nil))
     :bind (corfu-map
@@ -319,30 +336,33 @@ corfuとtempelのintegrationとかやってくれる はず
                                               :sort t
                                               :exclusive 'no)))))
     (add-hook 'eglot--managed-mode-hook (lambda ()
-                                         (setq-local
-                                          completion-at-point-functions
-                                          (list
-                                           (cape-capf-noninterruptible
-                                            (cape-capf-buster
-                                             (cape-capf-properties
-                                              (cape-capf-super ;; 補完候補を結合
-                                               #'tempel-complete
-                                               #'eglot-completion-at-point
-                                               #'cape-keyword
-                                               #'cape-dabbrev
-                                               #'cape-abbrev)
-                                              :sort t
-                                              :exclusive 'no)))))))
+                                          (setq-local
+                                           completion-at-point-functions
+                                           (list
+                                            (cape-capf-noninterruptible
+                                             (cape-capf-buster
+                                              (cape-capf-properties
+                                               (cape-capf-super ;; 補完候補を結合
+                                                #'tempel-complete
+                                                #'eglot-completion-at-point
+                                                #'cape-keyword
+                                                #'cape-dabbrev
+                                                #'cape-abbrev)
+                                               :sort t
+                                               :exclusive 'no)))))))
     )
 #+end_src
 **** tempel
-便利スニペット集
+スニペット提供ソース
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf tempel :ensure t)
-  (leaf tempel-collection :ensure t :after tempel)
 #+end_src
-*** lsp
-**** eglot
+***** tempel-collection
+スニペット集
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf tempel-collection :ensure t :after tempel)  
+#+end_src
+*** eglot
 軽量なLSPクライアント
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf eglot
@@ -357,10 +377,21 @@ corfuとtempelのintegrationとかやってくれる はず
                  '((latex-mode tex-mode context-mode
                                texinfo-mode bibtex-mode)
                    . ("texlab"))))
+#+end_src
+**** eglot-booster
+パフォーマンスを改善してくれる らしい
+#+begin_src emacs-lisp :tangle lisp/config.el
   (leaf eglot-booster
     :when (executable-find "emacs-lsp-booster")
     :after eglot
     :vc ( :url "https://github.com/jdtsmith/eglot-booster")
+    :global-minor-mode t)
+#+end_src
+**** eglot-tempel
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf eglot-tempel
+    :ensure t
+    :after eglot tempel
     :global-minor-mode t)
 #+end_src
 *** matcher
@@ -382,11 +413,19 @@ corfuとtempelのintegrationとかやってくれる はず
     :ensure t
     :custom ((prescient-aggressive-file-save . t))
     :global-minor-mode prescient-persist-mode)
+#+end_src
+***** corfu-prescient
+corfu向けのprescient matcher
+#+begin_src emacs-lisp :tangle lisp/config.el
   (leaf corfu-prescient
     :ensure t
     :after corfu prescient
     :custom ((corfu-prescient-enable-filtering . nil))
     :global-minor-mode t)
+#+end_src
+***** vertico-prescient
+vertico向けの(ry
+#+begin_src emacs-lisp :tangle lisp/config.el
   (leaf vertico-prescient
     :ensure t
     :after vertico prescient
@@ -480,8 +519,7 @@ corfuに対してiconを表示してあげる
     (ef-themes-select 'ef-frost)
     (ef-themes-with-colors
       (custom-set-faces
-       `(vc-edited-state ((t :foreground ,blue-cooler :inherit bold)))
-       `(vc-state-base ((t :inherit bold))))))
+       `(vc-edited-state ((t :foreground ,blue-cooler :inherit bold))))))
 #+end_src
 
 *** Moody
