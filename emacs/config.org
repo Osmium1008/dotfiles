@@ -10,11 +10,13 @@
   ;; Author: Osmium_1008 (osmium1008@gmail.com)
   ;; Version: 0.1
 
+  ;;; Commentary:
+
   ;;; Code:
 #+end_src
 
 ** OS distinction
-
+使ってないけどOSの判別結果が入力されている
 #+begin_src emacs-lisp :tangle lisp/config.el
   (defconst IS-MAC (eq system-type 'darwin))
   (defconst IS-LINUX (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
@@ -23,7 +25,6 @@
 
 ** leaf.el
 わりと柔軟に書ける設定マネージャ
-
 #+begin_src emacs-lisp :tangle lisp/config.el
   (eval-and-compile
     (customize-set-variable
@@ -49,6 +50,7 @@
 #+end_src
 
 ** cus-edit
+init.elをいじってほしくないので...
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf cus-edit
     :doc "tools for customizing Emacs and Lisp packages"
@@ -56,6 +58,7 @@
 #+end_src
 
 ** customize settings
+標準機能に関する設定
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf cus-start
     :doc "define customization properties of builtins"
@@ -98,6 +101,7 @@
 #+end_src
 
 ** startup
+スプラッシュスクリーンいらない...
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf startup
     :doc "startup commands"
@@ -106,7 +110,7 @@
 #+end_src
 
 ** autorevert
-
+他アプリによる編集を即時反映する らしい
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf autorevert
     :doc "revert buffers when files on disk change"
@@ -114,8 +118,7 @@
 #+end_src
 
 ** delsel
-Delete sentence when selects them and write
-
+選択範囲を消してから編集を行う 慣れたモード
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf delsel
     :doc "delete selection if you insert"
@@ -123,7 +126,7 @@ Delete sentence when selects them and write
 #+end_src
 
 ** files
-
+自動保存とかに関する設定
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf files
     :doc "file input and output commands for Emacs"
@@ -137,7 +140,6 @@ Delete sentence when selects them and write
 #+end_src
 
 ** simple
-
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf simple
     :doc "basic editing commands for Emacs"
@@ -146,6 +148,7 @@ Delete sentence when selects them and write
              (eval-expression-print-length . nil)
              (eval-expression-print-level . nil)))
 #+end_src
+
 ** vc-git
 モードライン表示の抑制のため
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -155,13 +158,6 @@ Delete sentence when selects them and write
     :doc "VC backend for the git version control system"
     :advice
     (:filter-return vc-git-mode-line-string filter-for-vc-mode-line))
-#+end_src
-** savehist
-#+begin_src emacs-lisp :tangle lisp/config.el
-  (leaf savehist
-    :doc "Save minibuffer history"
-    :custom `((savehist-file . ,(locate-user-emacs-file "savehist")))
-    :global-minor-mode t)
 #+end_src
 
 ** which-key
@@ -177,8 +173,6 @@ Delete sentence when selects them and write
 #+end_src
 
 ** flycheck
-High-spec linter
-
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf flycheck
     :doc "On-the-fly syntax checking"
@@ -189,6 +183,7 @@ High-spec linter
     :ensure t
     :global-minor-mode global-flycheck-mode)
 #+end_src
+
 ** AUCTeX
 TeX編集支援
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -207,6 +202,7 @@ TeX編集支援
              (reftex-toc-split-windows-fraction . 0.3))
     :global-minor-mode t)
 #+end_src
+
 ** Magit
 Gitプラグイン
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -226,8 +222,11 @@ Gitプラグイン
            (magit-status-mode-map
             ("q" . mu-magit-kill-buffers))))
 #+end_src
+
 ** completion
+検索や補完に関する諸々のプラグイン
 *** UI and Fuzzy-Finder
+ddu.vimとかtelescopeとか相当の諸々など
 **** Vertico
 UI提供プラグイン
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -238,11 +237,14 @@ UI提供プラグイン
              (vertico-cycle . t))
     :global-minor-mode t)
 #+end_src
+
 **** consult
-補完対象の生成
+補完対象の生成 source相当?
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf consult
-    :bind (;; search系列
+    :bind (;; どうせisearchは使わないので...
+           ("C-s" . consult-line)
+           ;; search系列
            ("M-s b" . consult-buffer)
            ("M-s M-b" . consult-buffer-other-window)
            ("M-s M-m" . consult-mode-command)
@@ -261,6 +263,7 @@ UI提供プラグイン
            )
     :ensure t)
 #+end_src
+
 **** affe
 async fuzzy finderな感じのプラグイン consultのfindとgrepが若干使いづらいっぽいので
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -285,11 +288,13 @@ async fuzzy finderな感じのプラグイン consultのfindとgrepが若干使�
              (affe-regexp-function . 'orderless-pattern-compiler)
              (affe-find-command . "fd --color=never --full-path")))
 #+end_src
+
 **** marginalia
 それっぽい補完候補の説明の生成
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf marginalia :ensure t :global-minor-mode t)
 #+end_src
+
 *** inline-complete
 **** corfu
 補完インターフェースを提供するパッケージ
@@ -313,10 +318,11 @@ async fuzzy finderな感じのプラグイン consultのfindとgrepが若干使�
     :global-minor-mode global-corfu-mode corfu-popupinfo-mode)
 
 #+end_src
+
 **** cape
 補完プラグイン系の構造よく知らないけどたぶんsource設定支援プラグイン
 corfuとtempelのintegrationとかやってくれる はず
-なんかしらないけどcape-elisp-symbolが上手く動かない...
+なんかしらないけどcape-elisp-symbolが上手く動かない... → そういうものだった
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf cape
     :ensure t
@@ -353,16 +359,19 @@ corfuとtempelのintegrationとかやってくれる はず
                                                :exclusive 'no)))))))
     )
 #+end_src
+
 **** tempel
 スニペット提供ソース
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf tempel :ensure t)
 #+end_src
+
 ***** tempel-collection
 スニペット集
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf tempel-collection :ensure t :after tempel)  
 #+end_src
+
 *** eglot
 軽量なLSPクライアント
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -379,6 +388,7 @@ corfuとtempelのintegrationとかやってくれる はず
                                texinfo-mode bibtex-mode)
                    . ("texlab"))))
 #+end_src
+
 **** eglot-booster
 パフォーマンスを改善してくれる らしい
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -388,13 +398,16 @@ corfuとtempelのintegrationとかやってくれる はず
     :vc ( :url "https://github.com/jdtsmith/eglot-booster")
     :global-minor-mode t)
 #+end_src
+
 **** eglot-tempel
+スニペットをスニペットマネージャに流しこむ
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf eglot-tempel
     :ensure t
     :after eglot tempel
     :global-minor-mode t)
 #+end_src
+
 *** matcher
 **** orderless
 あいまい検索
@@ -407,6 +420,7 @@ corfuとtempelのintegrationとかやってくれる はず
              (completion-category-defaults . nil)
              (completion-category-overrides . '((file (styles partial-completion))))))
 #+end_src
+
 **** prescient
 賢く並べ替え
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -415,6 +429,7 @@ corfuとtempelのintegrationとかやってくれる はず
     :custom ((prescient-aggressive-file-save . t))
     :global-minor-mode prescient-persist-mode)
 #+end_src
+
 ***** corfu-prescient
 corfu向けのprescient matcher
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -424,6 +439,7 @@ corfu向けのprescient matcher
     :custom ((corfu-prescient-enable-filtering . nil))
     :global-minor-mode t)
 #+end_src
+
 ***** vertico-prescient
 vertico向けの(ry
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -433,6 +449,16 @@ vertico向けの(ry
     :custom ((vertico-prescient-enable-filtering . nil))
     :global-minor-mode t)
 #+end_src
+
+**** savehist
+ミニバッファ履歴の保存 prescientと機能が被ってる気がしてならない
+#+begin_src emacs-lisp :tangle lisp/config.el
+  ;;  (leaf savehist
+  ;;    :doc "Save minibuffer history"
+  ;;    :custom `((savehist-file . ,(locate-user-emacs-file "savehist")))
+  ;;    :global-minor-mode t)
+#+end_src
+
 *** Code Action
 **** Embark
 コードアクション生成器
@@ -440,13 +466,18 @@ vertico向けの(ry
   (leaf embark
     :ensure t
     :bind (("s-e" . embark-act)))
+#+end_src
+
+***** embark-consult
+consultへのインテグレーション
+#+begin_src emacs-lisp :tangle lisp/config.el
   (leaf embark-consult
     :ensure t
     :after embark consult)
 #+end_src
-** puni
-Autoclose parenthesis
 
+** puni
+括り記号類をいい感じに編集する あと選択なども
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf puni
     :doc "Parentheses Universalistic"
@@ -455,12 +486,17 @@ Autoclose parenthesis
     :url "https://github.com/AmaiKinono/puni"
     :added "2025-05-26"
     :ensure t
-    :global-minor-mode puni-global-mode
-    :config
-    (leaf elec-pair
-      :doc "Automatic parenthesis pairing"
-      :global-minor-mode electric-pair-mode))
+    :global-minor-mode puni-global-mode)
 #+end_src
+
+** elec-pair
+括弧を勝手に閉じる
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf elec-pair
+    :ensure t
+    :global-minor-mode electric-pair-mode)
+#+end_src
+
 ** vundo
 安全なUndo らしい
 
@@ -472,9 +508,11 @@ Autoclose parenthesis
            ("C-?" . undo-redo))
     :custom (vundo-window-max-height . 10))
 #+end_src
-** appearances
-*** font
 
+** appearances
+見た目に関する設定をまとめる
+*** font
+どうせ入ってるUDEV Gothicを使う
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf font
     :added "2025-05-26"
@@ -493,6 +531,7 @@ Autoclose parenthesis
     :ensure t
     :custom ((nerd-icons-font-family . "UDEV Gothic NFLG")))
 #+end_src
+
 **** nerd-icons-corfu
 corfuに対してiconを表示してあげる
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -502,8 +541,9 @@ corfuに対してiconを表示してあげる
     :config
     (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 #+end_src
-*** full-screen
 
+*** full-screen
+こうしておくとフルスクにできるらしい
 #+begin_src emacs-lisp :tangle lisp/config.el
   (add-hook 'window-setup-hook
             (lambda ()
@@ -511,7 +551,8 @@ corfuに対してiconを表示してあげる
 #+end_src
 
 *** color-theme
-
+いろんなプラグインへの配色機能を持っている優れたテーマ
+いい感じのライトテーマも持っている
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf ef-themes
     :doc "customizable theme set"
@@ -524,7 +565,7 @@ corfuに対してiconを表示してあげる
 #+end_src
 
 *** Moody
-
+モードライン
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf moody
     :doc "Tabs and ribbons for the mode line"
@@ -537,16 +578,17 @@ corfuに対してiconを表示してあげる
     (moody-replace-mode-line-front-space)
     (moody-replace-mode-line-buffer-identification)
     (moody-replace-vc-mode))
-#+End_src
+#+end_src
 
 *** Minions
-
+マイナーモードを適宜折り畳んでくれる
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf minions
     :doc "simplify minor mode display"
     :ensure t
     :global-minor-mode minions-mode)
 #+end_src
+
 *** mlscroll
 モードラインにスクロールバーを表示してくれる モードラインがなんとなく寂しいので入れるだけ入れておく
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -555,28 +597,29 @@ corfuに対してiconを表示してあげる
     :custom ((mlscroll-width-chars . 12))
     :global-minor-mode mlscroll-mode)
 #+end_src
-*** hl-line
-Highlighting current line.
 
+*** hl-line
+編集中の行をハイライトしてくれる
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf hl-line
     :doc "highlight current line"
     :global-minor-mode global-hl-line-mode)
 #+end_src
+
 *** posframe
 補完フレームっぽいものを表示してくれる ddskk用に...
-
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf posframe :ensure t)
 #+end_src
+
 *** paren
 Highlighting parenthesis.
-
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf paren
     :doc "highlight matching paren"
     :global-minor-mode show-paren-mode)
 #+end_src
+
 *** diff-hl
 Gitとかの更新情報を持ってきて表示してくれる
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -584,6 +627,7 @@ Gitとかの更新情報を持ってきて表示してくれる
     :ensure t
     :global-minor-mode global-diff-hl-mode diff-hl-flydiff-mode diff-hl-show-hunk-mouse-mode)
 #+end_src
+
 ** org-mode
 *** org
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -595,7 +639,6 @@ Gitとかの更新情報を持ってきて表示してくれる
 #+end_src
 
 *** org-modern
-
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf org-modern
     :ensure t
@@ -642,13 +685,13 @@ customはskkeletonとかと同じ感じで打てるようにしてみている (
               (skk-delete-okuri-when-quit . t)
               (skk-indicator-prefix . "SKK:[")
               (skk-indicator-suffix-func . #'(lambda (mode) "]:"))
-              (skk-user-directory . ,(locate-user-emacs-file ".ddskk"))
+              ;;(skk-user-directory . ,(locate-user-emacs-file ".ddskk"))
               ;;(skk-use-azik . t)
               (skk-use-color-cursor . nil)
               (skk-indicator-use-cursor-color . nil)
               ;;(skk-auto-insert-paren . t) 手動入力がバグるので無効化
               (skk-isearch-mode-enable . nil)
-              (skk-jisyo-code . 'utf-8-unix)
+              ;;(skk-jisyo-code . 'utf-8-unix)
               (skk-azik-keyboard-type . 'us101)))
 #+end_src
 
@@ -666,6 +709,7 @@ posframeに変換候補を入れてくれるやつ after ddskkをすると上手
        `(ddskk-posframe-border ((t :background ,bg-alt)))))
     :global-minor-mode ddskk-posframe-mode)
 #+end_src
+
 *** custom-azik
 AZIKをなんかいい感じに設定するための自作スクリプト 割と変な実装してる ちゃんとカタカナとかも変換できるので上出来
 「っ」や「ん」なんかもしっかり送ってくれる
@@ -674,8 +718,8 @@ AZIKをなんかいい感じに設定するための自作スクリプト 割と
     :require t
     :hook skk-load-hook)
 #+end_src
-** footer
 
+** footer
 #+begin_src emacs-lisp :tangle lisp/config.el
   (provide 'config)
   ;;; config.el ends here
