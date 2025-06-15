@@ -184,6 +184,26 @@ init.elをいじってほしくないので...
     :global-minor-mode global-flycheck-mode)
 #+end_src
 
+** Rust
+The Rust programming language
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf rust-mode
+  :doc "A major-mode for editing Rust source code"
+  :tag "languages" "emacs>=25.1"
+  :url "https://github.com/rust-lang/rust-mode"
+  :added "2025-06-07"
+  ;;:custom ((rust-mode-treesitter-derive . t))
+  :hook ((rust-mode-hook . eglot-ensure)))
+#+end_src
+
+*** cargo
+The project manager for Rust
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf cargo
+    :ensure t
+    :hook (rust-mode-hook . cargo-minor-mode))
+#+end_src
+
 ** AUCTeX
 TeX編集支援
 #+begin_src emacs-lisp :tangle lisp/config.el
@@ -626,6 +646,13 @@ Gitとかの更新情報を持ってきて表示してくれる
   (leaf diff-hl
     :ensure t
     :global-minor-mode global-diff-hl-mode diff-hl-flydiff-mode diff-hl-show-hunk-mouse-mode)
+#+end_src
+
+*** treesit
+tree-sitterの有効化
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf treesit
+    :custom (treesit-font-lock-level . 4))
 #+end_src
 
 ** org-mode

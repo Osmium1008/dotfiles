@@ -1,12 +1,11 @@
 bat
 cargo-update
+dua-cli
 emacs-lsp-booster
 fd-find
+git-delta
 lsd
-mocword
 ripgrep
-satysfi-language-server
-stylua
 tealdeer
 texlab
 xh
