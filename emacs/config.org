@@ -28,8 +28,9 @@
 #+begin_src emacs-lisp :tangle lisp/config.el
   (eval-and-compile
     (customize-set-variable
-     'package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+     'package-archives '(;("gnu" . "https://elpa.gnu.org/packages/")
+  		       ("gnu" . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/gnu/")
+  		       ("melpa" . "https://melpa.org/packages/")))
     (package-initialize)
     (use-package leaf :ensure t)
 
@@ -139,6 +140,15 @@ init.elをいじってほしくないので...
               (auto-save-visited-interval . 30)))
 #+end_src
 
+** path
+パスを通す
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf exec-path-from-shell
+    :ensure t
+    :config
+    (exec-path-from-shell-initialize))
+#+end_src
+
 ** simple
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf simple
@@ -173,7 +183,7 @@ init.elをいじってほしくないので...
 #+end_src
 
 ** flycheck
-#+begin_src emacs-lisp :tangle lisp/config.el
+#+begin_src emacs-lisp
   (leaf flycheck
     :doc "On-the-fly syntax checking"
     :req "emacs-27.1"
@@ -184,7 +194,8 @@ init.elをいじってほしくないので...
     :global-minor-mode global-flycheck-mode)
 #+end_src
 
-** Rust
+** Languages
+*** Rust
 The Rust programming language
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf rust-mode
@@ -196,7 +207,7 @@ The Rust programming language
   :hook ((rust-mode-hook . eglot-ensure)))
 #+end_src
 
-*** cargo
+**** cargo
 The project manager for Rust
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf cargo
@@ -204,7 +215,7 @@ The project manager for Rust
     :hook (rust-mode-hook . cargo-minor-mode))
 #+end_src
 
-** AUCTeX
+*** AUCTeX
 TeX編集支援
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf tex
@@ -221,6 +232,16 @@ TeX編集支援
              (reftex-cite-prompt-optional-args . t)
              (reftex-toc-split-windows-fraction . 0.3))
     :global-minor-mode t)
+#+end_src
+
+*** ESS
+R編集支援
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf ess
+    :ensure t
+    :config
+    (leaf ess-site
+      :hook R-mode ess-r-mode R))
 #+end_src
 
 ** Magit
@@ -241,6 +262,12 @@ Gitプラグイン
            ("C-c f" . magit-file-dispatch)
            (magit-status-mode-map
             ("q" . mu-magit-kill-buffers))))
+#+end_src
+
+** MisTTY
+ターミナルエミュレータ
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf mistty :ensure t)
 #+end_src
 
 ** completion
@@ -282,6 +309,19 @@ UI提供プラグイン
            ("M-g f" . consult-flyckeck)
            )
     :ensure t)
+#+end_src
+
+***** consult-dir
+Vertico(等ミニバッファ環境)内でのディレクトリ移動を楽にしてくれる
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf consult-dir
+    :ensure t
+    :bind (;; グローバル
+           ("C-x C-d" . consult-dir)
+           (vertico-map
+            ("C-x C-d" . consult-dir)
+            ("C-x C-j" . consult-dir-jump-file)
+            )))
 #+end_src
 
 **** affe
@@ -398,7 +438,8 @@ corfuとtempelのintegrationとかやってくれる はず
   (leaf eglot
     :custom ((eglot-echo-area-use-multiline-p . nil))
     :require t
-    :hook (((TeX-mode-hook LaTeX-mode-hook) . eglot-ensure))
+    :hook (((TeX-mode-hook LaTeX-mode-hook) . eglot-ensure)
+           (ess-r-mode-hook . eglot-ensure))
     :config
     (delete (assoc '(tex-mode context-mode texinfo-mode bibtex-mode)
                    eglot-server-programs)
@@ -537,7 +578,6 @@ consultへのインテグレーション
   (leaf font
     :added "2025-05-26"
     :config
-    (leaf nerd-icons :ensure t)
     (let* ((family "UDEV Gothic NFLG")
            (fontspec (font-spec :family family :weight 'normal)))
       (set-face-attribute 'default nil :family family :height 130)
@@ -653,6 +693,15 @@ tree-sitterの有効化
 #+begin_src emacs-lisp :tangle lisp/config.el
   (leaf treesit
     :custom (treesit-font-lock-level . 4))
+#+end_src
+
+*** dirvish
+Dired強化プラグイン
+#+begin_src emacs-lisp :tangle lisp/config.el
+  (leaf dirvish
+    :ensure t
+    :custom ((insert-directory-program . "gls"))
+    :global-minor-mode dirvish-override-dired-mode)
 #+end_src
 
 ** org-mode

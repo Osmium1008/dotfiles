@@ -1,8 +1,13 @@
+[general]
+import = [
+    "~/.local/src/alacritty-theme/themes/catppuccin_latte.toml"
+]
+
 [font]
 normal = { family = "UDEV Gothic NFLG", style = "Regular" }
 
-[colors.primary]
-background = "#0F151A"
+# [colors.primary]
+# background = "#FFFFFF"
 
 [terminal]
 osc52 = "CopyPaste"

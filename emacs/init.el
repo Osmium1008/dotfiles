@@ -18,17 +18,16 @@
       (org-babel-tangle-file org_file)
       (unless skip_byte_compile (byte-compile-file el_file)))))
 
-;; Create ELisp files and byte-compile.
-(eval-when-compile
-  (require 'org)
-  (let ((lisp_path (locate-user-emacs-file "lisp"))
-        (config_el (locate-user-emacs-file "lisp/config.el"))
-        (custom_azik_el (locate-user-emacs-file "lisp/custom-azik.el"))
-        (config_org (locate-user-emacs-file "config.org"))
-        (custom_azik_org (locate-user-emacs-file "custom-azik.org")))
-    (unless (file-directory-p lisp_path) (mkdir lisp_path))
-    (update-el-file config_el config_org t)
-    (update-el-file custom_azik_el custom_azik_org nil)))
+;; Create ELisp files and byte-compile.(eval-when-compile
+(require 'org)
+(let ((lisp_path (locate-user-emacs-file "lisp"))
+      (config_el (locate-user-emacs-file "lisp/config.el"))
+      (custom_azik_el (locate-user-emacs-file "lisp/custom-azik.el"))
+      (config_org (locate-user-emacs-file "config.org"))
+      (custom_azik_org (locate-user-emacs-file "custom-azik.org")))
+  (unless (file-directory-p lisp_path) (mkdir lisp_path))
+  (update-el-file config_el config_org t)
+  (update-el-file custom_azik_el custom_azik_org nil))
 
 (add-to-list 'load-path (locate-user-emacs-file "lisp"))
 (require 'config)
