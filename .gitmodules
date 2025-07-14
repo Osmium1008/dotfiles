@@ -1,0 +1,12 @@
+[submodule "themes/alacritty-theme"]
+	path = themes/alacritty-theme
+	url = git@github.com:alacritty/alacritty-theme
+[submodule "themes/catppuccin-delta"]
+	path = themes/catppuccin-delta
+	url = git@github.com:catppuccin/delta
+[submodule "themes/catppuccin-lsd"]
+	path = themes/catppuccin-lsd
+	url = git@github.com:catppuccin/lsd
+[submodule "themes/catppuccin-bat"]
+	path = themes/catppuccin-bat
+	url = git@github.com:catppuccin/bat

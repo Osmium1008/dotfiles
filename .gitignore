@@ -1,9 +1,11 @@
 *
 !/.gitignore
+!/.gitmodules
 !/cargo_installed_packages
 !/brew_installed_packages
 !/README.md
 !/config/
 !/home/
 !/emacs/
-
+!/themes/
+!/themes/*

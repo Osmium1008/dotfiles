@@ -10,6 +10,8 @@ set -g theme_date_format "+%Y/%m/%d(%a) %H:%M:%S %Z"
 
 set -gx RUSTUP_HOME $HOME/.rustup
 set -gx CARGO_HOME $HOME/.cargo
+set -gx MANPAGER env\ BATMAN_IS_BEING_MANPAGER=yes\ bash\ /usr/bin/batman
+set -gx MANOFFOPT -c
 
 alias ls lsd
 alias cat bat
