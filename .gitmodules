@@ -10,6 +10,3 @@
 [submodule "themes/catppuccin-bat"]
 	path = themes/catppuccin-bat
 	url = git@github.com:catppuccin/bat
-[submodule "emacs"]
-	path = emacs
-	url = git@github.com:Osmium1008/.emacs.d
