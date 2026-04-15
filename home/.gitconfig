@@ -1,0 +1,62 @@
+[include]
+path = ~/dotfiles/themes/catppuccin-delta/catppuccin.gitconfig
+path = ~/local.gitconfig
+
+[init]
+defaultBranch = master
+
+[user]
+name = Osmium_1008
+email = osmium1008@gmail.com
+signingkey = 527920E8
+
+[alias]
+comend = commit --amend --no-edit
+logg = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+dif = diff --name-only
+difff = diff --word-diff
+
+[rerere]
+enabled = true
+
+[color]
+ui = auto
+
+[color "branch"]
+current = green bold
+local = cyan
+remote = red
+
+[color "status"]
+added = green
+changed = yellow
+ntracked = red
+
+[pull]
+rebase = false
+
+[core]
+autocrlf = input
+editor = emacs -nw
+pager = delta
+
+[push]
+autoSetupRemote = true
+
+[log]
+date = iso
+showSignature = true
+
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+navigate = true
+side-by-side = true
+features = catppuccin-latte
+
+[merge]
+conflictStyle = zdiff3
+
+[commit]
+gpgsign = true
