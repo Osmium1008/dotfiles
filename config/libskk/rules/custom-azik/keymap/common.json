@@ -1,0 +1,9 @@
+{
+    "define": {
+        "keymap": {
+            ":": "upper-;",
+	    "\t": null,
+	    "C-i": null
+        }
+    }
+}

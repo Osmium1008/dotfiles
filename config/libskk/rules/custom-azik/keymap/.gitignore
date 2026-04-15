@@ -1,0 +1,9 @@
+*
+!/.gitignore
+!/default.json
+!/common.json
+!/hiragana.json
+!/katakana.json
+!/latin.json
+!/wide-latin.json
+!/hankaku-katakana.json
