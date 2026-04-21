@@ -10,16 +10,32 @@ set -g theme_date_format "+%Y/%m/%d(%a) %H:%M:%S %Z"
 
 set -gx RUSTUP_HOME $HOME/.rustup
 set -gx CARGO_HOME $HOME/.cargo
-set -gx MANPAGER env\ BATMAN_IS_BEING_MANPAGER=yes\ bash\ batman
-set -gx MANOFFOPT -c
 
-alias ls lsd
-alias cat bat
-alias find fd
-alias grep rg
-alias la "lsd -la"
+if type -q batman
+   set -gx MANPAGER env\ BATMAN_IS_BEING_MANPAGER=yes\ bash\ batman
+   set -gx MANOFFOPT -c
+end
+
+if type -q lsd
+   alias ls lsd
+   alias la "lsd -la"
+end
+if type -q bat
+   alias cat bat
+end
+if type -q fd
+   alias find fd
+end
+if type -q rg
+   alias grep rg
+end
+
 set VIRTUAL_ENV_DISABLE_PROMPT 1
 
 if test -e ~/.config/fish/local_config.fish
     source ~/.config/fish/local_config.fish
+end
+
+if type -q fcitx5-remote
+   fcitx5-remote -s keyboard-us
 end

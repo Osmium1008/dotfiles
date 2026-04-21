@@ -1,0 +1,13 @@
+[Unit]
+Description=Yet Another SKK server
+
+[Service]
+Type=simple
+ExecStart=yaskkserv2 --config-filename /usr/local/etc/yaskkserv2.conf --no-daemonize
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
