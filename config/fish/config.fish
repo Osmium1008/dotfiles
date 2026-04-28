@@ -37,5 +37,6 @@ if test -e ~/.config/fish/local_config.fish
 end
 
 if type -q fcitx5-remote
+and test $TERM != linux
    fcitx5-remote -s keyboard-us
 end

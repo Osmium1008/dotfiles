@@ -37,7 +37,7 @@ rebase = false
 
 [core]
 autocrlf = input
-editor = emacs -nw
+editor = emacs
 pager = delta
 
 [push]
